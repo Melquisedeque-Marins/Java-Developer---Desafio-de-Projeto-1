@@ -34,7 +34,6 @@ public class PersonController {
         List<Person> list = personService.findAll();
         return ResponseEntity.ok().body(list);
 
-
     }
 
     @PostMapping
