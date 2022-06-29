@@ -12,7 +12,7 @@ import com.melck.personapi.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class PersonService {
-    
+
     @Autowired
     private PersonRepository personRepository;
 
@@ -21,7 +21,6 @@ public class PersonService {
        return p.orElseThrow(() -> new ObjectNotFoundException("O Objeto com id: " + id + " não foi encontrado"));       }
 
     public Person create(Person person) {
-        person.setId(null);
         return personRepository.save(person);
     }
 
@@ -29,5 +28,17 @@ public class PersonService {
         List<Person> list = personRepository.findAll();
 
         return list;
+    }
+
+    public void delete(Long id) {
+        findById(id);
+        personRepository.deleteById(id);
+    }
+
+    public Person updateById(Long id, Person person) {
+        findById(id);
+        Person personToUpdate = person;
+        Person savedPerson = personRepository.save(personToUpdate);
+        return savedPerson;
     }
 }
