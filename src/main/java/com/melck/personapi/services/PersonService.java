@@ -3,10 +3,14 @@ package com.melck.personapi.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.melck.personapi.dto.PersonDTO;
+import com.melck.personapi.dto.PhoneDTO;
 import com.melck.personapi.entity.Person;
+import com.melck.personapi.entity.Phone;
 import com.melck.personapi.repository.PersonRepository;
 import com.melck.personapi.services.exceptions.ObjectNotFoundException;
 
@@ -16,12 +20,19 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public Person findById(Long id){
-       Optional<Person> p = personRepository.findById(id);
-       return p.orElseThrow(() -> new ObjectNotFoundException("O Objeto com id: " + id + " não foi encontrado"));       }
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public Person create(Person person) {
-        return personRepository.save(person);
+    public PersonService() {
+    }
+
+    public Person findById(Long id){
+        Optional<Person> p = personRepository.findById(id);
+        return p.orElseThrow(() -> new ObjectNotFoundException("O Objeto com id: " + id + " não foi encontrado"));       }
+
+    public Person create(PersonDTO personDTO) {
+        Person personToSave = modelMapper.map(personDTO, Person.class);
+        return personRepository.save(personToSave);
     }
 
     public List<Person> findAll() {
@@ -41,4 +52,5 @@ public class PersonService {
         Person savedPerson = personRepository.save(personToUpdate);
         return savedPerson;
     }
+
 }

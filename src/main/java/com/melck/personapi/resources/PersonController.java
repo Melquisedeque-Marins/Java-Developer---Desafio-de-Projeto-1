@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.melck.personapi.dto.PersonDTO;
 import com.melck.personapi.entity.Person;
 import com.melck.personapi.services.PersonService;
 
@@ -38,10 +39,10 @@ public class PersonController {
         List<Person> list = personService.findAll();
         return ResponseEntity.ok().body(list);
     }
-
+    
     @PostMapping
-    public ResponseEntity<Person> create(@Valid @RequestBody Person person){
-            Person p = personService.create(person);
+    public ResponseEntity<Person> create(@RequestBody PersonDTO personDTO){
+            Person p = personService.create(personDTO);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(p.getId()).toUri();
         return ResponseEntity.created(uri).build(); 
     }
@@ -57,5 +58,4 @@ public class PersonController {
         Person updatePerson = personService.updateById(id, person);
         return ResponseEntity.ok().body(updatePerson);
     }
-
 }

@@ -1,5 +1,6 @@
 package com.melck.personapi.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,7 +15,7 @@ public class PersonDTO {
 
     @NotEmpty
     @Size(min = 2, max = 100)
-    private String firstNAme;
+    private String firstName;
 
     @NotEmpty
     @Size(min = 2, max = 100)
@@ -24,7 +25,7 @@ public class PersonDTO {
     @CPF
     private String cpf;
 
-    private String birthDate;
+    private LocalDate birthDate;
 
     @Valid
     @NotEmpty
@@ -33,9 +34,9 @@ public class PersonDTO {
     public PersonDTO() {
     }
 
-    public PersonDTO(Long id, String firstNAme, String lastName, String cpf, String birthDate, List<PhoneDTO> phone) {
+    public PersonDTO(Long id, String firstName, String lastName, String cpf, LocalDate birthDate, List<PhoneDTO> phone) {
         this.id = id;
-        this.firstNAme = firstNAme;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.cpf = cpf;
         this.birthDate = birthDate;
@@ -50,12 +51,12 @@ public class PersonDTO {
         this.id = id;
     }
 
-    public String getFirstNAme() {
-        return firstNAme;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstNAme(String firstNAme) {
-        this.firstNAme = firstNAme;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -74,13 +75,7 @@ public class PersonDTO {
         this.cpf = cpf;
     }
 
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
+    
 
     public List<PhoneDTO> getPhone() {
         return phone;
@@ -90,4 +85,19 @@ public class PersonDTO {
         this.phone = phone;
     }   
     
+
+    /**
+     * @return LocalDate return the birthDate
+     */
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    /**
+     * @param birthDate the birthDate to set
+     */
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
 }
